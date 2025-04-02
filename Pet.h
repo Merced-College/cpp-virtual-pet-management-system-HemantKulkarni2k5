@@ -5,7 +5,7 @@
 #include <iostream>
 
 class Pet {
-private:
+protected:
     std::string name;
     std::string species;
     int age;
@@ -15,6 +15,9 @@ public:
     // Constructors
     Pet();
     Pet(const std::string& name, const std::string& species, int age, int hungerLevel);
+
+    // Virtual Destructor
+    virtual ~Pet();
 
     // Accessors (Getters)
     std::string getName() const;
@@ -29,10 +32,11 @@ public:
     void setHungerLevel(int level);
 
     // CompareTo
-    int compareTo(const Pet& other) const; // Returns -1, 0, or 1 based on name comparison
+    int compareTo(const Pet& other) const;
 
-    // Output Function
-    void printInfo() const;
+    // Virtual functions for polymorphism
+    virtual void printInfo() const;
+    virtual void makeSound() const;
 };
 
 #endif
