@@ -1,21 +1,36 @@
 #include <iostream>
+#include <vector>
 #include "Pet.h"
+#include "Dog.h"
+#include "Cat.h"
+#include "Dragon.h"
 
 int main() {
-    Pet pet1("Rex", "Dog", 3, 6);
-    Pet pet2("Whiskers", "Cat", 2, 4);
+    // Create pets dynamically
+    Pet* myDog = new Dog("Buddy", 3, "Golden Retriever");
+    Pet* myCat = new Cat("Whiskers", 2, "Feather Toy");
+    Pet* myDragon = new Dragon("Drako", 100, 20, 10);
 
-    std::cout << "Pet 1 Info:\n";
-    pet1.printInfo();
+    // Store all pets in a vector
+    std::vector<Pet*> pets = { myDog, myCat, myDragon };
 
-    std::cout << "\nPet 2 Info:\n";
-    pet2.printInfo();
+    // Iterate and use polymorphism
+    for (Pet* pet : pets) {
+        pet->printInfo();
+        pet->makeSound();
+        std::cout << "----------------------\n";
+    }
 
-    std::cout << "\nComparing pets by name: ";
-    int result = pet1.compareTo(pet2);
-    if (result < 0) std::cout << pet1.getName() << " comes before " << pet2.getName() << "\n";
-    else if (result > 0) std::cout << pet1.getName() << " comes after " << pet2.getName() << "\n";
-    else std::cout << "Both pets have the same name.\n";
+    // Special method for Dragon
+    Dragon* dragonPtr = dynamic_cast<Dragon*>(myDragon);
+    if (dragonPtr) {
+        dragonPtr->breatheFire();
+    }
+
+    // Cleanup memory
+    for (Pet* pet : pets) {
+        delete pet;
+    }
 
     return 0;
 }
